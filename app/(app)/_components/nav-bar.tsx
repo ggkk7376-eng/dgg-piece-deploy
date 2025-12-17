@@ -37,22 +37,14 @@ export function NavBar() {
           <Link href="#works">Realizacje</Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#services">Usługi</Link>
+          <Link href="#services">Oferta</Link>
         </NavBarItem>
         <NavBarItem>
           <Link href="#contact">Kontakt</Link>
         </NavBarItem>
       </NavBarContent>
 
-      <Flipper asChild>
-        <NavBarAction>
-          <span>{"Napisz do nas"}</span>
 
-          <FlipperContent className="h-6 w-6" itemClassName="h-5 w-5">
-            <External />
-          </FlipperContent>
-        </NavBarAction>
-      </Flipper>
     </NavBarRoot>
   );
 }
