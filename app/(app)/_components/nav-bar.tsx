@@ -23,7 +23,7 @@ export function NavBar() {
           <AppLogo className="h-full" />
         </Link>
 
-        <NavBarTrigger />
+        <NavBarTrigger className="absolute right-0" />
       </NavBarHeader>
 
       <NavBarContent>
