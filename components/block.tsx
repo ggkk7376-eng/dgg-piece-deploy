@@ -3,7 +3,9 @@ import type { FC } from "react";
 import { Button } from "@/payload/blocks/button/component";
 import { Carousel } from "@/payload/blocks/carousel/component";
 import { ContactForm } from "@/payload/blocks/contact-form/component";
+import { Download } from "@/payload/blocks/download/component";
 import { Headline } from "@/payload/blocks/headline/component";
+import { Offer } from "@/payload/blocks/offer/component";
 import { Section } from "@/payload/blocks/section/component";
 import { StatusAlert } from "@/payload/blocks/status-alert/component";
 import { Text } from "@/payload/blocks/text/component";
@@ -21,6 +23,10 @@ const blockComponents: {
   "status-alert": StatusAlert,
   text: Text,
   "contact-form": ContactForm,
+  // @ts-expect-error - Types will be generated on build
+  offer: Offer,
+  // @ts-expect-error - Types will be generated on build
+  download: Download,
 };
 
 export function Block(props: BlocksProps) {
