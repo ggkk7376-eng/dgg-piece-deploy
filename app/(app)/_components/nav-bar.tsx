@@ -28,25 +28,25 @@ export function NavBar() {
 
       <NavBarContent>
         <NavBarItem>
-          <Link href="#why-us">Why Us</Link>
+          <Link href="#why-us">Dlaczego my</Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#mission">Mission</Link>
+          <Link href="#mission">Misja</Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#works">Works</Link>
+          <Link href="#works">Realizacje</Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#services">Services</Link>
+          <Link href="#services">Usługi</Link>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#contact">Contact</Link>
+          <Link href="#contact">Kontakt</Link>
         </NavBarItem>
       </NavBarContent>
 
       <Flipper asChild>
         <NavBarAction>
-          <span>{"Let's Talk"}</span>
+          <span>{"Napisz do nas"}</span>
 
           <FlipperContent className="h-6 w-6" itemClassName="h-5 w-5">
             <External />
