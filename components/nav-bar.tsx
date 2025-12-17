@@ -56,7 +56,7 @@ export function NavBar({ children }: { children: ReactNode }) {
           initial={isClient}
           variants={{
             closed: {
-              height: "calc(var(--spacing) * 16)",
+              height: "calc(var(--spacing) * 12)",
               transition: {
                 delay: 0.2,
                 delayChildren: stagger(0.03, { from: "last" }),
@@ -89,7 +89,7 @@ export function NavBarHeader({
       {...props}
       className={cn("zoom-out flex animate-in flex-col gap-3", className)}
     >
-      <div className="relative flex w-full items-center justify-center">
+      <div className="grid grid-flow-col items-center justify-between">
         {children}
       </div>
 
