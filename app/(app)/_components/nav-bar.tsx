@@ -5,6 +5,10 @@ import Link from "next/link";
 import External from "@/assets/icons/external.svg";
 import { Flipper, FlipperContent } from "@/components/animation/flipper";
 import {
+  NavBarContent,
+  NavBarHeader,
+  NavBarItem,
+  NavBar as NavBarRoot,
   NavBarTrigger,
   useNavBar,
 } from "@/components/nav-bar";
