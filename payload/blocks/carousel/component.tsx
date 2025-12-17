@@ -12,7 +12,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { payload } from "@/lib/payload";
+import { getPayloadClient } from "@/lib/payload";
 import type { Carousel as CarouselProps, Media } from "@/payload-types";
 
 export function Carousel({ text, images }: CarouselProps) {
@@ -59,7 +59,8 @@ export function Carousel({ text, images }: CarouselProps) {
 }
 
 const getMedia = cache(
-  async (id: number) => await payload.findByID({ collection: "media", id }),
+  async (id: number) =>
+    (await getPayloadClient()).findByID({ collection: "media", id }),
 );
 
 function getDefinedSize(

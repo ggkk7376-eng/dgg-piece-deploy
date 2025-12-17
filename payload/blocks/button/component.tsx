@@ -5,7 +5,7 @@ import { EnterAnimationBlur } from "@/components/animation/enter-animation";
 import { Flipper, FlipperContent } from "@/components/animation/flipper";
 import { DynamicDialog } from "@/components/dynamic-dialog";
 import { Text } from "@/components/text";
-import { payload } from "@/lib/payload";
+import { getPayloadClient } from "@/lib/payload";
 import type { Button as ButtonProps, Dialog } from "@/payload-types";
 
 export function Button({ dialog, label }: ButtonProps) {
@@ -49,5 +49,6 @@ async function DialogTrigger({
 }
 
 const getDialog = cache(
-  async (id: number) => await payload.findByID({ collection: "dialogs", id }),
+  async (id: number) =>
+    (await getPayloadClient()).findByID({ collection: "dialogs", id }),
 );

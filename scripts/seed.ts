@@ -1,6 +1,8 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { payload } from "@/lib/payload";
+import { getPayloadClient } from "@/lib/payload";
+
+const payload = await getPayloadClient();
 
 const media = await (async () => {
   const mediaDir = path.resolve(
