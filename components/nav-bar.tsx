@@ -33,7 +33,7 @@ interface NavBarState {
 
 const NavBarContext = createContext<NavBarState | undefined>(undefined);
 
-function useNavBar() {
+export function useNavBar() {
   const context = use(NavBarContext);
   invariant(context, "useNavBar must be used within a NavBar");
   return context;

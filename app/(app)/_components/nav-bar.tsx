@@ -5,15 +5,20 @@ import Link from "next/link";
 import External from "@/assets/icons/external.svg";
 import { Flipper, FlipperContent } from "@/components/animation/flipper";
 import {
-  NavBarAction,
-  NavBarContent,
-  NavBarHeader,
-  NavBarItem,
-  NavBar as NavBarRoot,
   NavBarTrigger,
+  useNavBar,
 } from "@/components/nav-bar";
 
 import { AppLogo } from "./logo";
+
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const { toggle } = useNavBar();
+  return (
+    <Link href={href} onClick={toggle}>
+      {children}
+    </Link>
+  );
+}
 
 export function NavBar() {
   return (
@@ -22,25 +27,24 @@ export function NavBar() {
         <Link href="/" className="block h-full">
           <AppLogo className="h-full" />
         </Link>
-
         <NavBarTrigger />
       </NavBarHeader>
 
       <NavBarContent>
         <NavBarItem>
-          <Link href="#why-us">Dlaczego my</Link>
+          <NavLink href="#why-us">Dlaczego my</NavLink>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#mission">Misja</Link>
+          <NavLink href="#mission">Misja</NavLink>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#works">Realizacje</Link>
+          <NavLink href="#works">Realizacje</NavLink>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#services">Oferta</Link>
+          <NavLink href="#services">Oferta</NavLink>
         </NavBarItem>
         <NavBarItem>
-          <Link href="#contact">Kontakt</Link>
+          <NavLink href="#contact">Kontakt</NavLink>
         </NavBarItem>
       </NavBarContent>
 
