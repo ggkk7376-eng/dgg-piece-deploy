@@ -7,8 +7,6 @@ import { headline } from "../headline/config";
 import { statusAlert } from "../status-alert/config";
 import { text } from "../text/config";
 
-import { offer } from "../offer/config";
-import { download } from "../download/config";
 
 export const section: Block = {
   slug: "section",
@@ -25,8 +23,6 @@ export const section: Block = {
         statusAlert,
         text,
         contactForm,
-        offer,
-        download,
       ],
     },
   ],
