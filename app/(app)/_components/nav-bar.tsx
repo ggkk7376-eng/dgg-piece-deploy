@@ -8,6 +8,7 @@ import {
   NavBarContent,
   NavBarHeader,
   NavBarItem,
+  NavBarAction,
   NavBar as NavBarRoot,
   NavBarTrigger,
   useNavBar,
@@ -52,7 +53,14 @@ export function NavBar() {
         </NavBarItem>
       </NavBarContent>
 
-
+      <NavBarAction
+        className="mt-6 w-full"
+        onClick={() => {
+          window.location.href = "mailto:kontakt@dggpiece.pl";
+        }}
+      >
+        Napisz email <External className="size-4" />
+      </NavBarAction>
     </NavBarRoot>
   );
 }
