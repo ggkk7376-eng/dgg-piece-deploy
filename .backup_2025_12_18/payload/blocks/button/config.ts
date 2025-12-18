@@ -23,22 +23,6 @@ export const button: Block = {
       required: true,
     },
     {
-      type: "select",
-      name: "type",
-      label: "Typ",
-      defaultValue: "dialog",
-      options: [
-        {
-          label: "Dialog",
-          value: "dialog",
-        },
-        {
-          label: "Link",
-          value: "link",
-        },
-      ],
-    },
-    {
       type: "relationship",
       name: "dialog",
       label: {
@@ -48,20 +32,10 @@ export const button: Block = {
       relationTo: "dialogs",
       hasMany: false,
       admin: {
-        condition: (_, siblingData) => siblingData?.type === "dialog",
         description: {
           en: "If set, pressing the button will open the selected dialog.",
           pl: "Jeśli ustawione, kliknięcie przycisku otworzy wybrany dialog.",
         },
-      },
-    },
-    {
-      type: "text",
-      name: "url",
-      label: "URL",
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === "link",
-        description: "np. #contact lub https://google.com",
       },
     },
   ],
