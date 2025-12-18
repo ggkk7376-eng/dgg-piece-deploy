@@ -26,6 +26,13 @@ const getPage = cache(async (slug: string) => {
   return result.docs[0];
 });
 
+const getSettings = cache(async () => {
+  const payload = await getPayloadClient();
+  return payload.findGlobal({
+    slug: "settings",
+  });
+});
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
@@ -42,12 +49,13 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const page = await getPage((await params).slug);
+  const settings = await getSettings();
 
   return (
     <>
       <LivePreview />
 
-      <NavBar />
+      <NavBar contactDialog={(settings as any).contactDialog} />
 
       {page.content?.map((block) => (
         <Block {...block} key={block.id} />
