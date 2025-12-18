@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { ModalAction, ModalClose } from "@/components/modal";
 import { Button } from "@/components/ui/button";
