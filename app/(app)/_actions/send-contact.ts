@@ -1,6 +1,6 @@
 "use server";
 
-import nodemailer from "nodemailer";
+import { createTransport } from "nodemailer";
 
 import { getPayloadClient } from "@/lib/payload";
 
@@ -20,7 +20,7 @@ export async function sendContactEmail(data: ContactFormData) {
         throw new Error("SMTP configuration is missing on server.");
     }
 
-    const transporter = nodemailer.createTransport({
+    const transporter = createTransport({
         host: emailSettings.host,
         port: emailSettings.port,
         secure: emailSettings.port === 465, // Implicit secure for 465, otherwise STARTTLS
