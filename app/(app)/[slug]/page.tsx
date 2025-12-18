@@ -49,13 +49,12 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const page = await getPage((await params).slug);
-  const settings = await getSettings();
 
   return (
     <>
       <LivePreview />
 
-      <NavBar contactDialog={(settings as any).contactDialog} />
+      <NavBar />
 
       {page.content?.map((block) => (
         <Block {...block} key={block.id} />

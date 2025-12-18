@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import External from "@/assets/icons/external.svg";
 import { Flipper, FlipperContent } from "@/components/animation/flipper";
-import { DynamicDialog } from "@/components/dynamic-dialog";
 import {
   NavBarContent,
   NavBarHeader,
@@ -14,7 +13,6 @@ import {
   NavBarTrigger,
   useNavBar,
 } from "@/components/nav-bar";
-import type { Dialog } from "@/payload-types";
 
 import { AppLogo } from "./logo";
 
@@ -27,7 +25,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-export function NavBar({ contactDialog }: { contactDialog?: Dialog | number | null }) {
+export function NavBar() {
   return (
     <NavBarRoot>
       <NavBarHeader>
@@ -55,22 +53,14 @@ export function NavBar({ contactDialog }: { contactDialog?: Dialog | number | nu
         </NavBarItem>
       </NavBarContent>
 
-      {typeof contactDialog === "object" && contactDialog ? (
-        <DynamicDialog {...contactDialog} asChild>
-          <NavBarAction className="mt-6 w-full">
-            Napisz email <External className="size-4" />
-          </NavBarAction>
-        </DynamicDialog>
-      ) : (
-        <NavBarAction
-          className="mt-6 w-full"
-          onClick={() => {
-            window.location.href = "mailto:kontakt@dggpiece.pl";
-          }}
-        >
-          Napisz email <External className="size-4" />
-        </NavBarAction>
-      )}
+      <NavBarAction
+        className="mt-6 w-full"
+        onClick={() => {
+          window.location.href = "mailto:kontakt@dggpiece.pl";
+        }}
+      >
+        Napisz email <External className="size-4" />
+      </NavBarAction>
     </NavBarRoot>
   );
 }
