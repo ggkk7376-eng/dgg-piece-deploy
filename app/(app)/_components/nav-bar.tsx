@@ -29,7 +29,7 @@ export function NavBar() {
     <NavBarRoot>
       <NavBarHeader>
         <Link href="/" className="block h-full">
-          <AppLogo className="h-full scale-150 origin-left" />
+          <AppLogo className="h-20 w-auto origin-left" />
         </Link>
         <NavBarTrigger />
       </NavBarHeader>
