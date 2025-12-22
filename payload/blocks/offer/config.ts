@@ -17,8 +17,8 @@ export const offer: Block = {
             name: "items",
             type: "array",
             label: {
-                en: "Offer Items",
-                pl: "Elementy oferty",
+                en: "Items",
+                pl: "Elementy",
             },
             fields: [
                 {

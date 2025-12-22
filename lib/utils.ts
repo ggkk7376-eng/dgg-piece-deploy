@@ -12,7 +12,7 @@ export function mergeRefs<T>(...refs: (Ref<T> | undefined)[]) {
       if (typeof ref === "function") {
         ref(value);
       } else if (ref != null) {
-        ref.current = value;
+        (ref as any).current = value;
       }
     }
   };

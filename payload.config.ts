@@ -33,6 +33,7 @@ const config = buildConfig({
   secret: env.PAYLOAD_SECRET,
   db: postgresAdapter({
     // migrationDir: "./migrations", // Use migrations list instead of auto-discovery
+    // @ts-ignore
     migrations,
     pool: {
       connectionString: env.DATABASE_URL,

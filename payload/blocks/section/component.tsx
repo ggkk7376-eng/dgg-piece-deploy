@@ -24,9 +24,10 @@ export function Section({
         >
           <div className="relative flex flex-col items-center gap-6">
             <TextProvider className="text-light-300">
-              {children?.map((child) => (
-                <Block {...child} key={child.id} />
-              ))}
+              {children?.map((block) => {
+                const BlockAny = Block as any;
+                return <BlockAny {...block} key={block.id} />;
+              })}
             </TextProvider>
           </div>
         </section>

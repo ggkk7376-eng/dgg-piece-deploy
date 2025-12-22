@@ -18,7 +18,14 @@ const nextConfig: NextConfig = {
     },
   },
   experimental: {
-    allowedDevOrigins: ["www.dggpiece.pl", "dggpiece.pl", "localhost:3001", "localhost:3005"],
+    serverActions: {
+      bodySizeLimit: "2mb",
+    },
+    turbo: {
+      resolveAlias: {
+        canvas: "./empty-module.ts",
+      },
+    },
   },
   images: {
     remotePatterns: [
