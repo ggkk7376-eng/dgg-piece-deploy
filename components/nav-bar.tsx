@@ -56,7 +56,7 @@ export function NavBar({ children }: { children: ReactNode }) {
           initial={isClient}
           variants={{
             closed: {
-              height: "calc(var(--spacing) * 24)",
+              height: "calc(var(--spacing) * 32)",
               transition: {
                 delay: 0.2,
                 delayChildren: stagger(0.03, { from: "last" }),

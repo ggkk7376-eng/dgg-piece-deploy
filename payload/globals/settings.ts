@@ -26,6 +26,20 @@ export const settings: GlobalConfig = {
       },
     },
     {
+      type: "text",
+      name: "publicEmail",
+      label: {
+        en: "Public Email",
+        pl: "Publiczny adres Email",
+      },
+      admin: {
+        description: {
+          en: "Email address displayed on the website (e.g. footer)",
+          pl: "Adres email wyświetlany na stronie (np. w stopce)",
+        },
+      },
+    },
+    {
       type: "group",
       name: "email",
       label: {
