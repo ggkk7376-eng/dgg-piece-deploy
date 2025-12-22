@@ -25,7 +25,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-export function NavBar({ publicEmail }: { publicEmail?: string }) {
+export function NavBar() {
   return (
     <NavBarRoot>
       <NavBarHeader>
@@ -56,11 +56,7 @@ export function NavBar({ publicEmail }: { publicEmail?: string }) {
       <NavBarAction
         className="mt-6 w-full"
         onClick={() => {
-          if (publicEmail) {
-            window.location.href = `mailto:${publicEmail}`;
-          } else {
-            window.location.href = "mailto:kontakt@dggpiece.pl";
-          }
+          window.location.href = "mailto:kontakt@dggpiece.pl";
         }}
       >
         Napisz email <External className="size-4" />
