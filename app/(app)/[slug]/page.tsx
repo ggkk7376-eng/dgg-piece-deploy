@@ -49,12 +49,15 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const page = await getPage((await params).slug);
+  const settings = await getSettings();
+  // @ts-ignore
+  const publicEmail = settings?.publicEmail as string | undefined;
 
   return (
     <>
       <LivePreview />
 
-      <NavBar />
+      <NavBar publicEmail={publicEmail} />
 
       {page.content?.map((block) => (
         <Block {...block} key={block.id} />
