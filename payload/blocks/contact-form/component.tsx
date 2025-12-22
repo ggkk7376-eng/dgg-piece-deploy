@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAppForm } from "@/lib/form";
 
 import { useState } from "react";
-import { sendEmailAction } from "../../_actions/send-email";
+import { sendEmailAction } from "@/app/(app)/_actions/send-email";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
