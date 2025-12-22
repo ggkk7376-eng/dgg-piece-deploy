@@ -3,12 +3,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  typescript: {
-    ignoreBuildErrors: true,
+  serverExternalPackages: ["sharp"],
+  experimental: {
+    allowedDevOrigins: ["www.dggpiece.pl", "dggpiece.pl", "localhost:3001"],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+  sassOptions: {
+    silenceDeprecations: ["legacy-js-api", "import"],
   },
+  productionBrowserSourceMaps: false,
   turbopack: {
     rules: {
       "*.svg": {
@@ -17,8 +19,11 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  experimental: {
-    allowedDevOrigins: ["www.dggpiece.pl", "dggpiece.pl", "localhost:3001", "localhost:3005"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
     remotePatterns: [
@@ -49,8 +54,10 @@ const nextConfig: NextConfig = {
 
     fileLoaderRule.exclude = /\.svg$/i;
 
+
     return config;
   },
 };
 
+console.log("--- CONFIG LOADED v6 (NO ALIAS + SILENT SASS) ---");
 export default withPayload(nextConfig);

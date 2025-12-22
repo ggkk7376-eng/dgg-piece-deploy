@@ -14,16 +14,7 @@ RUN rm -f package-lock.json && npm install --legacy-peer-deps
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY app ./app
-COPY payload ./payload
-COPY components ./components
-COPY lib ./lib
-COPY public ./public
-COPY next.config.ts ./
-COPY tsconfig.json ./
-COPY payload.config.ts ./
-COPY migrations ./migrations
-COPY package.json ./
+COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
