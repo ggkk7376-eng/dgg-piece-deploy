@@ -27,9 +27,6 @@ COPY package.json ./
 COPY postcss.config.* ./
 COPY components.json ./
 COPY tailwind.config.* ./
-COPY postcss.config.* ./
-COPY components.json ./
-COPY tailwind.config.* ./
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry

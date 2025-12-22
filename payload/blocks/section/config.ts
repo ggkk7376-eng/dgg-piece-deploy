@@ -6,9 +6,6 @@ import { contactForm } from "../contact-form/config";
 import { headline } from "../headline/config";
 import { statusAlert } from "../status-alert/config";
 import { text } from "../text/config";
-import { offer } from "../offer/config";
-import { gallery } from "../gallery/config";
-import { download } from "../download/config";
 
 
 export const section: Block = {
@@ -34,9 +31,6 @@ export const section: Block = {
         statusAlert,
         text,
         contactForm,
-        offer,
-        gallery,
-        download,
       ],
     },
   ],

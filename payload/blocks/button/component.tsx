@@ -48,12 +48,10 @@ export function Button({ dialog, label, type, url }: ExtendedButtonProps) {
     );
   }
 
-  // @ts-ignore
-  const DialogTriggerAny = DialogTrigger as any;
   return (
-    <DialogTriggerAny dialog={dialog}>
+    <DialogTrigger dialog={dialog}>
       <ButtonContent label={label} />
-    </DialogTriggerAny>
+    </DialogTrigger>
   );
 }
 
