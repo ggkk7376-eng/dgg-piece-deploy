@@ -26,13 +26,6 @@ const getPage = cache(async (slug: string) => {
   return result.docs[0];
 });
 
-const getSettings = cache(async () => {
-  const payload = await getPayloadClient();
-  return payload.findGlobal({
-    slug: "settings",
-  });
-});
-
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({

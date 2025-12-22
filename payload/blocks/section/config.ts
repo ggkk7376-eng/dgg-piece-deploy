@@ -13,14 +13,6 @@ export const section: Block = {
   // ...
   fields: [
     {
-      name: "slug",
-      type: "text",
-      label: "ID (kotwica - np. contact)",
-      admin: {
-        placeholder: "np. contact (bez #)",
-      },
-    },
-    {
       type: "blocks",
       name: "children",
       // ...

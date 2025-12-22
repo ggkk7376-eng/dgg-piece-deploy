@@ -18,7 +18,6 @@ import { dialogs } from "./payload/collections/dialogs";
 import { media } from "./payload/collections/media";
 import { pages } from "./payload/collections/pages";
 import { users } from "./payload/collections/users";
-import { migrations } from "./migrations";
 import { settings } from "./payload/globals/settings";
 
 const config = buildConfig({
@@ -32,8 +31,7 @@ const config = buildConfig({
   blocks: [button, carousel, contactForm, headline, statusAlert, text, section],
   secret: env.PAYLOAD_SECRET,
   db: postgresAdapter({
-    // migrationDir: "./migrations", // Use migrations list instead of auto-discovery
-    migrations,
+    migrationDir: "./migrations",
     pool: {
       connectionString: env.DATABASE_URL,
     },
