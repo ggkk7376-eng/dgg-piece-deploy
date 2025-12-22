@@ -1,12 +1,11 @@
-// import type { Download as DownloadProps } from "@/payload-types";
-import { cn } from "@/lib/utils";
 import { FileDown } from "lucide-react";
+import type { Download as DownloadProps } from "@/payload-types";
+import { cn } from "@/lib/utils";
 
-
-export const Download: React.FC<any> = ({ files }) => {
+export function Download({ files }: DownloadProps) {
     return (
         <div className="flex flex-col gap-3">
-            {files?.map((item: any) => {
+            {files?.map((item) => {
                 const fileUrl = typeof item.file === "object" ? item.file?.url : null;
                 if (!fileUrl) return null;
 
