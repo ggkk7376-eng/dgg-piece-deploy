@@ -25,5 +25,22 @@ export const media: CollectionConfig = {
         pl: "Tekst alternatywny",
       },
     },
+    {
+      name: "category",
+      type: "select",
+      label: {
+        en: "Category",
+        pl: "Kategoria",
+      },
+      options: [
+        { label: "Produkty (Oferta)", value: "products" },
+        { label: "Realizacje", value: "projects" },
+        { label: "Dokumenty", value: "documents" },
+        { label: "Ogólne", value: "general" },
+      ],
+      admin: {
+        position: "sidebar",
+      },
+    },
   ],
 };
