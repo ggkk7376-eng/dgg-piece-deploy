@@ -1,5 +1,0 @@
-Deployment Verification
-Timestamp: 2025-12-18T00:22:00+01:00
-Commit: e878384
-Fix: Version bump to 0.1.1
-Establishes proof of push.
