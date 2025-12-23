@@ -9,7 +9,7 @@ export function LivePreview() {
   return (
     <RefreshRouteOnSave
       refresh={() => router.refresh()}
-      serverURL="http://localhost:3000"
+      serverURL={process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"}
     />
   );
 }
