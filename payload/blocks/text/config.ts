@@ -42,6 +42,9 @@ export const text: Block = {
         pl: "Treść",
       },
       type: "richText",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [...defaultFeatures],
+      }),
     },
     {
       type: "textarea",
