@@ -36,11 +36,22 @@ export const text: Block = {
       ],
     },
     {
+      name: "richTextContent",
+      label: {
+        en: "Content",
+        pl: "Treść",
+      },
+      type: "richText",
+    },
+    {
       type: "textarea",
       name: "text",
       label: {
-        en: "Text",
-        pl: "Tekst",
+        en: "Legacy Text",
+        pl: "Tekst (Stary)",
+      },
+      admin: {
+        hidden: true,
       },
     },
   ],

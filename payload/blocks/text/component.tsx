@@ -3,6 +3,7 @@
 import { createContext, use } from "react";
 
 import { EnterAnimationBlurText } from "@/components/animation/enter-animation";
+import { RichText } from "@/components/rich-text";
 import { Text as BaseText } from "@/components/text";
 import type { Text as TextProps } from "@/payload-types";
 
@@ -19,8 +20,16 @@ export function TextProvider({
   return <TextContext.Provider value={value}>{children}</TextContext.Provider>;
 }
 
-export function Text({ text, variant }: TextProps) {
+export function Text({ text, richTextContent, variant }: TextProps & { richTextContent?: any }) {
   const context = use(TextContext);
+
+  if (richTextContent) {
+    return (
+      <div className={context?.className}>
+        <RichText content={richTextContent} />
+      </div>
+    );
+  }
 
   return (
     <BaseText variant={variant} className={context?.className}>
