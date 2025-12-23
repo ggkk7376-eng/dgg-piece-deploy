@@ -18,13 +18,9 @@ export const richtext: Block = {
             name: "content",
             label: {
                 en: "Content",
-                pl: "Treść",
+                pl: "Treść (Edytor Wizualny)",
             },
             type: "richText",
-            editor: lexicalEditor({
-                features: ({ defaultFeatures }) => [...defaultFeatures],
-            }),
-            required: true,
         },
         {
             name: "debugHtml",
