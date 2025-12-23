@@ -43,20 +43,17 @@ export const text: Block = {
         pl: "Treść",
       },
       type: "richText",
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [...defaultFeatures],
-      }),
     },
     {
       type: "textarea",
       name: "text",
       label: {
-        en: "Legacy Text",
-        pl: "Tekst (Stary)",
+        en: "Legacy Text (Backup)",
+        pl: "Tekst (Stary - kopia zapasowa)",
       },
-      admin: {
-        hidden: true,
-      },
+      // admin: {
+      //   hidden: true,
+      // },
     },
   ],
 };
