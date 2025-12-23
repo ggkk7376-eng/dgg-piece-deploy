@@ -21,10 +21,10 @@ export const pages: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     livePreview: {
-      url: ({ data }) =>
-        data.slug === "home"
-          ? "http://localhost:3000"
-          : `http://localhost:3000/${data.slug}`,
+      url: ({ data }) => {
+        const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+        return data.slug === "home" ? baseUrl : `${baseUrl}/${data.slug}`;
+      },
     },
   },
   fields: [
