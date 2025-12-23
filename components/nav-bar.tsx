@@ -56,7 +56,7 @@ export function NavBar({ children }: { children: ReactNode }) {
           initial={isClient}
           variants={{
             closed: {
-              height: "calc(var(--spacing) * 32)",
+              height: "calc(var(--spacing) * 26)",
               transition: {
                 delay: 0.2,
                 delayChildren: stagger(0.03, { from: "last" }),
@@ -70,7 +70,7 @@ export function NavBar({ children }: { children: ReactNode }) {
               },
             },
           }}
-          className="flex min-h-9 flex-col gap-8 overflow-hidden rounded-[40px] bg-dark-600 px-8 py-2 transition-[height]"
+          className="flex min-h-9 flex-col gap-8 overflow-hidden rounded-[40px] bg-dark-600 px-8 pt-3 pb-1 transition-[height]"
         >
           {children}
         </m.div>
