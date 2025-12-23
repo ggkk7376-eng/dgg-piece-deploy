@@ -36,14 +36,14 @@ export const text: Block = {
         },
       ],
     },
-    {
-      name: "richTextContent",
-      label: {
-        en: "Content",
-        pl: "Treść",
-      },
-      type: "richText",
-    },
+    // {
+    //   name: "richTextContent",
+    //   label: {
+    //     en: "Content",
+    //     pl: "Treść",
+    //   },
+    //   type: "richText",
+    // },
     {
       type: "textarea",
       name: "text",
