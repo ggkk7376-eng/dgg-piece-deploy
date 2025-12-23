@@ -14,6 +14,7 @@ import { headline } from "./payload/blocks/headline/config";
 import { section } from "./payload/blocks/section/config";
 import { statusAlert } from "./payload/blocks/status-alert/config";
 import { text } from "./payload/blocks/text/config";
+import { richtext } from "./payload/blocks/richtext/config";
 import { dialogs } from "./payload/collections/dialogs";
 import { media } from "./payload/collections/media";
 import { pages } from "./payload/collections/pages";
@@ -29,7 +30,7 @@ const config = buildConfig({
   },
   globals: [settings],
   collections: [pages, media, users, dialogs],
-  blocks: [button, carousel, contactForm, headline, statusAlert, text, section],
+  blocks: [button, carousel, contactForm, headline, statusAlert, text, richtext, section],
   secret: env.PAYLOAD_SECRET,
   db: postgresAdapter({
     // migrationDir: "./migrations", // Use migrations list instead of auto-discovery

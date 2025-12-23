@@ -1,5 +1,6 @@
 import type { Block } from "payload";
 
+import { richtext } from "../richtext/config";
 import { button } from "../button/config";
 import { carousel } from "../carousel/config";
 import { contactForm } from "../contact-form/config";
@@ -25,6 +26,7 @@ export const section: Block = {
       name: "children",
       // ...
       blocks: [
+        richtext,
         button,
         carousel,
         headline,
