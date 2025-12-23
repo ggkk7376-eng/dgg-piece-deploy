@@ -14,14 +14,14 @@ export const richtext: Block = {
         },
     },
     fields: [
-        {
-            name: "content",
-            label: {
-                en: "Content",
-                pl: "Treść (Edytor Wizualny)",
-            },
-            type: "richText",
-        },
+        // {
+        //     name: "content",
+        //     label: {
+        //         en: "Content",
+        //         pl: "Treść (Edytor Wizualny)",
+        //     },
+        //     type: "richText",
+        // },
         {
             name: "debugHtml",
             label: "Treść (Nieformatowana/HTML - Awaryjne)",
