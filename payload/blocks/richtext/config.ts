@@ -26,5 +26,13 @@ export const richtext: Block = {
             }),
             required: true,
         },
+        {
+            name: "debugHtml",
+            label: "Treść (Nieformatowana/HTML - Awaryjne)",
+            type: "textarea",
+            admin: {
+                description: "Użyj tego pola, jeśli edytor graficzny powyżej nie działa. Możesz tu wpisać tekst lub kod HTML.",
+            },
+        },
     ],
 };

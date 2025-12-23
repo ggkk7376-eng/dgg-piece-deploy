@@ -1,9 +1,10 @@
 import { RichText as RichTextRenderer } from "@/components/rich-text";
 
-export function RichText({ content, className }: { content: any, className?: string }) {
+export function RichText({ content, debugHtml, className }: { content: any, debugHtml?: string, className?: string }) {
     return (
         <div className={className}>
-            <RichTextRenderer content={content} />
+            {content && <RichTextRenderer content={content} />}
+            {debugHtml && <div dangerouslySetInnerHTML={{ __html: debugHtml }} />}
         </div>
     );
 }
