@@ -44,19 +44,19 @@ function serializeLexical({ nodes }: { nodes: Node[] }): React.ReactNode {
 
         if (node.type === "text") {
             let text = <span key={index}>{node.text as string}</span>;
-            if (node.format & 1) {
+            if ((node.format ?? 0) & 1) {
                 text = <strong key={index}>{text}</strong>;
             }
-            if (node.format & 2) {
+            if ((node.format ?? 0) & 2) {
                 text = <em key={index}>{text}</em>;
             }
-            if (node.format & 4) {
+            if ((node.format ?? 0) & 4) {
                 text = <s key={index}>{text}</s>;
             }
-            if (node.format & 8) {
+            if ((node.format ?? 0) & 8) {
                 text = <code key={index}>{text}</code>;
             }
-            if (node.format & 16) {
+            if ((node.format ?? 0) & 16) {
                 text = <u key={index}>{text}</u>;
             }
             return text;
