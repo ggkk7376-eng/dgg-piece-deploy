@@ -4,6 +4,7 @@ import { Button } from "@/payload/blocks/button/component";
 import { Carousel } from "@/payload/blocks/carousel/component";
 import { ContactForm } from "@/payload/blocks/contact-form/component";
 import { Headline } from "@/payload/blocks/headline/component";
+import { RichText } from "@/payload/blocks/richtext/component";
 import { Section } from "@/payload/blocks/section/component";
 import { StatusAlert } from "@/payload/blocks/status-alert/component";
 import { Text } from "@/payload/blocks/text/component";
@@ -20,6 +21,7 @@ const blockComponents: {
   section: Section,
   "status-alert": StatusAlert,
   text: Text,
+  richtext: RichText,
   "contact-form": ContactForm,
 };
 
