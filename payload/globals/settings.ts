@@ -11,35 +11,6 @@ export const settings: GlobalConfig = {
   },
   fields: [
     {
-      type: "relationship",
-      name: "contactDialog",
-      relationTo: "dialogs",
-      label: {
-        en: "Contact Dialog",
-        pl: "Dialog kontaktowy",
-      },
-      admin: {
-        description: {
-          en: "Dialog to display when clicking Contact button",
-          pl: "Dialog wyświetlany po kliknięciu przycisku Kontakt",
-        },
-      },
-    },
-    {
-      type: "text",
-      name: "publicEmail",
-      label: {
-        en: "Public Email",
-        pl: "Publiczny adres Email",
-      },
-      admin: {
-        description: {
-          en: "Email address displayed on the website (e.g. footer)",
-          pl: "Adres email wyświetlany na stronie (np. w stopce)",
-        },
-      },
-    },
-    {
       type: "group",
       name: "email",
       label: {

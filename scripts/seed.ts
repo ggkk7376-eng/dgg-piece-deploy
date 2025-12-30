@@ -1,8 +1,9 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { getPayloadClient } from "@/lib/payload";
+import config from "../payload.config";
+import { getPayload } from "payload";
 
-const payload = await getPayloadClient();
+const payload = await getPayload({ config });
 
 const media = await (async () => {
   const mediaDir = path.resolve(
@@ -65,6 +66,7 @@ await payload.create({
           {
             blockType: "button",
             label: "Dowiedz się więcej",
+            type: "dialog",
             dialog: contactDialog,
           },
           {

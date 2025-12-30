@@ -11,8 +11,22 @@ export const media: CollectionConfig = {
     staticDir: "media",
     imageSizes: [
       {
-        name: "carouselImage",
-        height: 35,
+        name: "thumbnail",
+        width: 400,
+        height: 300,
+        position: "centre",
+      },
+      {
+        name: "card",
+        width: 768,
+        height: 1024,
+        position: "centre",
+      },
+      {
+        name: "large",
+        width: 1600,
+        // Zachowaj proporcje (brak height)
+        position: "centre",
       },
     ],
   },
@@ -23,23 +37,6 @@ export const media: CollectionConfig = {
       label: {
         en: "Alt text",
         pl: "Tekst alternatywny",
-      },
-    },
-    {
-      name: "category",
-      type: "select",
-      label: {
-        en: "Category",
-        pl: "Kategoria",
-      },
-      options: [
-        { label: "Produkty (Oferta)", value: "products" },
-        { label: "Realizacje", value: "projects" },
-        { label: "Dokumenty", value: "documents" },
-        { label: "Ogólne", value: "general" },
-      ],
-      admin: {
-        position: "sidebar",
       },
     },
   ],

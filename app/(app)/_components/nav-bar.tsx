@@ -1,66 +1,59 @@
-"use client";
-
 import Link from "next/link";
+import { payload } from "@/lib/payload";
 
-import External from "@/assets/icons/external.svg";
-import { Flipper, FlipperContent } from "@/components/animation/flipper";
 import {
   NavBarContent,
   NavBarHeader,
   NavBarItem,
-  NavBarAction,
   NavBar as NavBarRoot,
   NavBarTrigger,
-  useNavBar,
 } from "@/components/nav-bar";
 
 import { AppLogo } from "./logo";
+import { DownloadsModal } from "@/components/downloads-modal";
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  const { toggle } = useNavBar();
-  return (
-    <Link href={href} onClick={toggle}>
-      {children}
-    </Link>
-  );
-}
+export async function NavBar() {
+  let nav;
+  let downloads;
 
-export function NavBar() {
+  try {
+    nav = await payload.findGlobal({
+      slug: "navigation",
+    });
+    downloads = await payload.findGlobal({
+      slug: "downloads",
+    });
+  } catch (e) {
+    console.error("Failed to fetch navigation or downloads:", e);
+  }
+
+  const items = [
+    { label: nav?.whyUsLabel || "Dlaczego my?", url: "/#why-us" },
+    { label: nav?.missionLabel || "Nasza misja", url: "/#mission" },
+    { label: nav?.worksLabel || "Realizacje", url: "/#works" },
+    { label: "Produkty", url: "/#products" }, // Hardcoded per screenshot request
+    { label: nav?.contactLabel || "Kontakt", url: "/#contact" },
+  ];
+
   return (
     <NavBarRoot>
       <NavBarHeader>
-        <Link href="/" className="block h-full">
-          <AppLogo className="h-20 w-auto origin-left" />
+        <Link href="/" className="block h-[52px]">
+          <AppLogo className="h-full" />
         </Link>
+
         <NavBarTrigger />
       </NavBarHeader>
 
       <NavBarContent>
-        <NavBarItem>
-          <NavLink href="#why-us">Dlaczego my</NavLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavLink href="#mission">Misja</NavLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavLink href="#works">Realizacje</NavLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavLink href="#services">Oferta</NavLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavLink href="#contact">Kontakt</NavLink>
-        </NavBarItem>
+        {items.map((item, index) => (
+          <NavBarItem key={index}>
+            <Link href={item.url}>{item.label}</Link>
+          </NavBarItem>
+        ))}
       </NavBarContent>
 
-      <NavBarAction
-        className="mt-6 w-full"
-        onClick={() => {
-          window.location.href = "mailto:kontakt@dggpiece.pl";
-        }}
-      >
-        Napisz email <External className="size-4" />
-      </NavBarAction>
+      <DownloadsModal data={downloads as any} />
     </NavBarRoot>
   );
 }

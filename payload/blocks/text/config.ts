@@ -1,5 +1,4 @@
 import type { Block } from "payload";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 
 export const text: Block = {
   slug: "text",
@@ -36,24 +35,13 @@ export const text: Block = {
         },
       ],
     },
-    // {
-    //   name: "richTextContent",
-    //   label: {
-    //     en: "Content",
-    //     pl: "Treść",
-    //   },
-    //   type: "richText",
-    // },
     {
       type: "textarea",
       name: "text",
       label: {
-        en: "Legacy Text (Backup)",
-        pl: "Tekst (Stary - kopia zapasowa)",
+        en: "Text",
+        pl: "Tekst",
       },
-      // admin: {
-      //   hidden: true,
-      // },
     },
   ],
 };

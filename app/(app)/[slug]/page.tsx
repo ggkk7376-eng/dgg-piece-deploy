@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { Block } from "@/components/block";
-import { getPayloadClient } from "@/lib/payload";
+import { payload } from "@/lib/payload";
 
 import { NavBar } from "../_components/nav-bar";
 import { LivePreview } from "./_components/live-preview";
@@ -13,7 +13,6 @@ interface PageProps {
 }
 
 const getPage = cache(async (slug: string) => {
-  const payload = await getPayloadClient();
   const result = await payload.find({
     collection: "pages",
     where: { slug: { equals: slug } },
@@ -24,13 +23,6 @@ const getPage = cache(async (slug: string) => {
   }
 
   return result.docs[0];
-});
-
-const getSettings = cache(async () => {
-  const payload = await getPayloadClient();
-  return payload.findGlobal({
-    slug: "settings",
-  });
 });
 
 export const dynamic = "force-dynamic";

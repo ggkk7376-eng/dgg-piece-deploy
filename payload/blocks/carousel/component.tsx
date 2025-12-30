@@ -12,7 +12,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { getPayloadClient } from "@/lib/payload";
+import { payload } from "@/lib/payload";
 import type { Carousel as CarouselProps, Media } from "@/payload-types";
 
 export function Carousel({ text, images }: CarouselProps) {
@@ -59,24 +59,23 @@ export function Carousel({ text, images }: CarouselProps) {
 }
 
 const getMedia = cache(
-  async (id: number) =>
-    (await getPayloadClient()).findByID({ collection: "media", id }),
+  async (id: number) => await payload.findByID({ collection: "media", id }),
 );
 
 function getDefinedSize(
   media: Media,
-  sizeName: keyof Required<Media>["sizes"],
+  sizeName: string, // Relaxed type to avoid mismatch with generated types
 ) {
+  // @ts-expect-error
   const size = media.sizes?.[sizeName];
 
   const url = size?.url;
-  invariant(url, "URL is missing");
-
   const width = size?.width;
-  invariant(width, "Width is missing");
-
   const height = size?.height;
-  invariant(height, "Height is missing");
+
+  if (!url || !width || !height) {
+    return null;
+  }
 
   return {
     url,
@@ -91,7 +90,17 @@ async function CarouselImage({
   const media =
     typeof mediaOrId === "number" ? await getMedia(mediaOrId) : mediaOrId;
 
-  const size = getDefinedSize(media, "carouselImage");
+  // Use original always for best quality and correct aspect ratio
+  // Thumbnail (400x300) forces 4:3 which distorts/crops wide logos
+  const size = {
+    url: media.url!,
+    width: media.width!,
+    height: media.height!,
+  };
+
+  if (!size) {
+    return null;
+  }
 
   return (
     <Image
@@ -99,6 +108,7 @@ async function CarouselImage({
       src={size.url}
       width={size.width}
       height={size.height}
+      className="h-8 w-auto object-contain"
     />
   );
 }

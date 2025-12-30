@@ -26,7 +26,12 @@ const secondaryFont = localFont({
 
 export const metadata: Metadata = {
   title: "DGG Piece",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
+
+import { Footer } from "@/components/footer";
 
 export default function RootLayout({
   children,
@@ -40,6 +45,7 @@ export default function RootLayout({
       >
         <LazyMotion features={domMax} strict>
           {children}
+          <Footer />
         </LazyMotion>
       </body>
     </html>

@@ -1,6 +1,7 @@
-import { postgresAdapter } from "@payloadcms/db-postgres";
+import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { nodemailerAdapter } from "@payloadcms/email-nodemailer";
 import { en } from "@payloadcms/translations/languages/en";
 import { pl } from "@payloadcms/translations/languages/pl";
 import { buildConfig } from "payload";
@@ -14,12 +15,14 @@ import { headline } from "./payload/blocks/headline/config";
 import { section } from "./payload/blocks/section/config";
 import { statusAlert } from "./payload/blocks/status-alert/config";
 import { text } from "./payload/blocks/text/config";
-import { richtext } from "./payload/blocks/richtext/config";
+import { gallery } from "./payload/blocks/gallery/config";
+import { realizations } from "./payload/blocks/realizations/config";
 import { dialogs } from "./payload/collections/dialogs";
 import { media } from "./payload/collections/media";
 import { pages } from "./payload/collections/pages";
 import { users } from "./payload/collections/users";
-import { migrations } from "./migrations";
+import { downloads } from "./payload/globals/downloads";
+import { navigation } from "./payload/globals/navigation";
 import { settings } from "./payload/globals/settings";
 
 const config = buildConfig({
@@ -28,16 +31,16 @@ const config = buildConfig({
   admin: {
     user: users.slug,
   },
-  globals: [settings],
+  globals: [settings, downloads, navigation],
   collections: [pages, media, users, dialogs],
-  blocks: [button, carousel, contactForm, headline, statusAlert, text, richtext, section],
+  blocks: [button, carousel, contactForm, gallery, headline, statusAlert, text, section, realizations],
   secret: env.PAYLOAD_SECRET,
-  db: postgresAdapter({
-    // migrationDir: "./migrations", // Use migrations list instead of auto-discovery
-    migrations,
-    pool: {
-      connectionString: env.DATABASE_URL,
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URI || "file:./dgg-piece.db",
     },
+    // Enable schema push to create tables on empty DB (since we have no migrations)
+    push: true,
   }),
   i18n: {
     fallbackLanguage: "pl",
@@ -46,6 +49,20 @@ const config = buildConfig({
       pl,
     },
   },
+  email: env.SMTP_HOST
+    ? nodemailerAdapter({
+      defaultFromAddress: "info@dgg-piece.pl",
+      defaultFromName: "DGG Piece",
+      transportOptions: {
+        host: env.SMTP_HOST,
+        port: 587,
+        auth: {
+          user: env.SMTP_USER,
+          pass: env.SMTP_PASS,
+        },
+      },
+    })
+    : undefined,
   plugins: [
     vercelBlobStorage({
       enabled: Boolean(env.VERCEL_READ_WRITE_TOKEN),

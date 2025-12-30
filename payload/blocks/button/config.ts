@@ -25,18 +25,80 @@ export const button: Block = {
     {
       type: "select",
       name: "type",
-      label: "Typ",
+      label: {
+        en: "Type",
+        pl: "Typ",
+      },
       defaultValue: "dialog",
       options: [
         {
-          label: "Dialog",
+          label: {
+            en: "Page",
+            pl: "Strona",
+          },
+          value: "page",
+        },
+        {
+          label: {
+            en: "Custom URL",
+            pl: "Link zewnętrzny",
+          },
+          value: "custom",
+        },
+        {
+          label: {
+            en: "Dialog",
+            pl: "Dialog",
+          },
           value: "dialog",
         },
         {
-          label: "Link",
-          value: "link",
+          label: {
+            en: "File",
+            pl: "Plik",
+          },
+          value: "file",
         },
       ],
+      required: true,
+    },
+    {
+      type: "relationship",
+      name: "page",
+      label: {
+        en: "Page",
+        pl: "Strona",
+      },
+      relationTo: "pages",
+      required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === "page",
+      },
+    },
+    {
+      type: "upload",
+      name: "file",
+      label: {
+        en: "File",
+        pl: "Plik",
+      },
+      relationTo: "media",
+      required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === "file",
+      },
+    },
+    {
+      type: "text",
+      name: "url",
+      label: {
+        en: "URL",
+        pl: "Link",
+      },
+      required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === "custom",
+      },
     },
     {
       type: "relationship",
@@ -53,15 +115,6 @@ export const button: Block = {
           en: "If set, pressing the button will open the selected dialog.",
           pl: "Jeśli ustawione, kliknięcie przycisku otworzy wybrany dialog.",
         },
-      },
-    },
-    {
-      type: "text",
-      name: "url",
-      label: "URL",
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === "link",
-        description: "np. #contact lub https://google.com",
       },
     },
   ],

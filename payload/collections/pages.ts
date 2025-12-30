@@ -2,11 +2,15 @@ import type { CollectionConfig } from "payload";
 
 import { unrestricted } from "@/payload/access/unrestricted";
 import { section } from "@/payload/blocks/section/config";
+import { realizations } from "@/payload/blocks/realizations/config";
 
 export const pages: CollectionConfig = {
   slug: "pages",
   access: {
-    read: unrestricted,
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   labels: {
     singular: {
@@ -21,10 +25,10 @@ export const pages: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     livePreview: {
-      url: ({ data }) => {
-        const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-        return data.slug === "home" ? baseUrl : `${baseUrl}/${data.slug}`;
-      },
+      url: ({ data }) =>
+        data.slug === "home"
+          ? "http://localhost:3000"
+          : `http://localhost:3000/${data.slug}`,
     },
   },
   fields: [
@@ -77,7 +81,7 @@ export const pages: CollectionConfig = {
         en: "Content",
         pl: "Treść",
       },
-      blocks: [section],
+      blocks: [section, realizations],
     },
   ],
 };

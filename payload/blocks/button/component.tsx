@@ -5,26 +5,20 @@ import { EnterAnimationBlur } from "@/components/animation/enter-animation";
 import { Flipper, FlipperContent } from "@/components/animation/flipper";
 import { DynamicDialog } from "@/components/dynamic-dialog";
 import { Text } from "@/components/text";
-import { getPayloadClient } from "@/lib/payload";
+import { payload } from "@/lib/payload";
 import type { Button as ButtonProps, Dialog } from "@/payload-types";
 
 import Link from "next/link";
+import type { Page } from "@/payload-types";
 
-// Temporary interface extension until types are regenerated
-interface ExtendedButtonProps extends ButtonProps {
-  type?: "dialog" | "link";
-  url?: string;
-}
+export function Button(props: ButtonProps) {
+  const { type, label, dialog, page, url } = props;
 
-// ... existing imports ...
-
-function ButtonContent({ label }: { label: string }) {
-  // ... existing implementation ...
-  return (
+  const content = (
     <EnterAnimationBlur className="flex cursor-pointer items-center justify-center gap-1 rounded-lg border border-[#212121] bg-[radial-gradient(66%_93%_at_48%_0%,#262626_0%,var(--color-dark-600)_76%)] px-7 py-4 font-sans">
       <Flipper asChild>
         <Text variant="p2" asChild>
-          <button type="button">
+          <span className="flex items-center gap-2">
             <span>{label}</span>
             <FlipperContent
               className="h-6 w-6"
@@ -32,25 +26,32 @@ function ButtonContent({ label }: { label: string }) {
             >
               <External />
             </FlipperContent>
-          </button>
+          </span>
         </Text>
       </Flipper>
     </EnterAnimationBlur>
   );
-}
 
-export function Button({ dialog, label, type, url }: ExtendedButtonProps) {
-  if (type === "link" && url) {
-    return (
-      <Link href={url}>
-        <ButtonContent label={label} />
-      </Link>
-    );
+  if (type === "page" && page) {
+    // Check if page is an object (populated) or ID (string)
+    const pageSlug = typeof page === 'object' && page !== null ? (page as Page).slug : '';
+
+    if (pageSlug) {
+      return <Link href={`/${pageSlug === 'home' ? '' : pageSlug}`}>{content}</Link>;
+    }
+  }
+
+  if (type === "custom" && url) {
+    return <a href={url} target="_blank" rel="noopener noreferrer">{content}</a>;
+  }
+
+  if (type === "file" && props.file && typeof props.file === 'object' && props.file.url) {
+    return <a href={props.file.url} target="_blank" rel="noopener noreferrer">{content}</a>;
   }
 
   return (
     <DialogTrigger dialog={dialog}>
-      <ButtonContent label={label} />
+      <button type="button">{content}</button>
     </DialogTrigger>
   );
 }
@@ -73,6 +74,6 @@ async function DialogTrigger({
   );
 }
 
-const getDialog = cache(async (id: number) =>
-  (await getPayloadClient()).findByID({ collection: "dialogs", id }),
+const getDialog = cache(
+  async (id: number) => await payload.findByID({ collection: "dialogs", id }),
 );

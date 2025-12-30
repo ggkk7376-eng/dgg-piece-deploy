@@ -17,10 +17,9 @@ export function Section({
         <section
           id={slug ?? undefined}
           className={cn(
-            "flex min-h-[20vh] h-auto scroll-mt-28 flex-col gap-8 px-5 pt-24 pb-11",
+            "flex min-h-[70vh] flex-col gap-10 px-5 pt-36 pb-11",
             className,
-          )
-          }
+          )}
         >
           <div className="relative flex flex-col items-center gap-6">
             <TextProvider className="text-light-300">

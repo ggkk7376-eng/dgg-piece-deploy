@@ -33,7 +33,7 @@ interface NavBarState {
 
 const NavBarContext = createContext<NavBarState | undefined>(undefined);
 
-export function useNavBar() {
+function useNavBar() {
   const context = use(NavBarContext);
   invariant(context, "useNavBar must be used within a NavBar");
   return context;
@@ -50,13 +50,13 @@ export function NavBar({ children }: { children: ReactNode }) {
         toggle: useCallback(() => setOpen((value) => !value), []),
       }}
     >
-      <nav className="-translate-x-1/2 fixed top-4 left-1/2 z-10 w-[90%] rounded-[40px] bg-gradient-to-b from-dark-300 to-[rgba(33,33,33,0.4)] p-px">
+      <nav className="-translate-x-1/2 fixed top-4 left-1/2 z-50 w-[90%] rounded-[40px] bg-gradient-to-b from-accent to-[rgba(33,33,33,0.4)] p-px">
         <m.div
           animate={isOpen ? "open" : "closed"}
           initial={isClient}
           variants={{
             closed: {
-              height: "calc(var(--spacing) * 26)",
+              height: "64px",
               transition: {
                 delay: 0.2,
                 delayChildren: stagger(0.03, { from: "last" }),
@@ -70,7 +70,7 @@ export function NavBar({ children }: { children: ReactNode }) {
               },
             },
           }}
-          className="flex min-h-9 flex-col gap-8 overflow-hidden rounded-[40px] bg-dark-600 px-8 pt-3 pb-1 transition-[height]"
+          className="flex min-h-[64px] flex-col gap-8 overflow-hidden rounded-[40px] bg-dark-600 px-8 py-2 transition-[height]"
         >
           {children}
         </m.div>
@@ -165,6 +165,7 @@ export function NavBarItem({
   className,
   ...props
 }: ComponentPropsWithRef<typeof m.li>) {
+  const { toggle } = useNavBar();
   return (
     <Text
       variant="p2"
@@ -180,6 +181,10 @@ export function NavBarItem({
           open: { filter: "blur(0px)", scale: 1, opacity: 1 },
         }}
         {...props}
+        onClick={(e) => {
+          toggle();
+          props.onClick?.(e);
+        }}
       />
     </Text>
   );

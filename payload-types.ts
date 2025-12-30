@@ -69,10 +69,12 @@ export interface Config {
     button: Button;
     carousel: Carousel;
     'contact-form': ContactForm;
+    gallery: Gallery;
     headline: Headline;
     'status-alert': StatusAlert;
     text: Text;
     section: Section;
+    realizations: Realizations;
   };
   collections: {
     pages: Page;
@@ -98,11 +100,16 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
+  fallbackLocale: null;
   globals: {
     settings: Setting;
+    downloads: Download;
+    navigation: Navigation;
   };
   globalsSelect: {
     settings: SettingsSelect<false> | SettingsSelect<true>;
+    downloads: DownloadsSelect<false> | DownloadsSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
   };
   locale: null;
   user: User & {
@@ -137,6 +144,10 @@ export interface UserAuthOperations {
  */
 export interface Button {
   label: string;
+  type: 'page' | 'custom' | 'dialog' | 'file';
+  page?: (number | null) | Page;
+  file?: (number | null) | Media;
+  url?: string | null;
   /**
    * If set, pressing the button will open the selected dialog.
    */
@@ -147,32 +158,127 @@ export interface Button {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dialogs".
+ * via the `definition` "pages".
  */
-export interface Dialog {
+export interface Page {
   id: number;
-  title?: string | null;
+  title: string;
+  slug: string;
+  keywords?: string | null;
   description?: string | null;
   content?:
+  | (
     | {
+      /**
+       * Allows to create a links to the section
+       */
+      slug?: string | null;
+      children?:
+      | (
+        | {
+          label: string;
+          type: 'page' | 'custom' | 'dialog' | 'file';
+          page?: (number | null) | Page;
+          file?: (number | null) | Media;
+          url?: string | null;
+          /**
+           * If set, pressing the button will open the selected dialog.
+           */
+          dialog?: (number | null) | Dialog;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'button';
+        }
+        | {
+          text?: string | null;
+          images?: (number | Media)[] | null;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'carousel';
+        }
+        | {
+          lines: {
+            text: string;
+            id?: string | null;
+          }[];
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'headline';
+        }
+        | {
+          color: string;
+          content: string;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'status-alert';
+        }
+        | {
+          variant?: ('p1' | 'p2' | 'p3') | null;
+          text?: string | null;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'text';
+        }
+        | {
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'contact-form';
+        }
+        | {
+          title?: string | null;
+          items?:
+          | {
+            images: (number | Media)[];
+            title: string;
+            category: 'kilns' | 'controllers' | 'accessories' | 'other';
+            /**
+             * e.g. '$100', 'from $50'
+             */
+            price?: string | null;
+            description?: string | null;
+            id?: string | null;
+          }[]
+          | null;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'gallery';
+        }
+        | {
+          triggerLabel: string;
+          slides?:
+          | {
+            image: number | Media;
+            description?: string | null;
+            id?: string | null;
+          }[]
+          | null;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'realizations';
+        }
+      )[]
+      | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'section';
+    }
+    | {
+      triggerLabel: string;
+      slides?:
+      | {
+        image: number | Media;
+        description?: string | null;
         id?: string | null;
-        blockName?: string | null;
-        blockType: 'contact-form';
       }[]
-    | null;
+      | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'realizations';
+    }
+  )[]
+  | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "carousel".
- */
-export interface Carousel {
-  text?: string | null;
-  images?: (number | Media)[] | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'carousel';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -193,7 +299,23 @@ export interface Media {
   focalX?: number | null;
   focalY?: number | null;
   sizes?: {
-    carouselImage?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -205,12 +327,64 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dialogs".
+ */
+export interface Dialog {
+  id: number;
+  title?: string | null;
+  description?: string | null;
+  content?:
+  | {
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'contact-form';
+  }[]
+  | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carousel".
+ */
+export interface Carousel {
+  text?: string | null;
+  images?: (number | Media)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carousel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-form".
  */
 export interface ContactForm {
   id?: string | null;
   blockName?: string | null;
   blockType: 'contact-form';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  title?: string | null;
+  items?:
+  | {
+    images: (number | Media)[];
+    title: string;
+    category: 'kilns' | 'controllers' | 'accessories' | 'other';
+    /**
+     * e.g. '$100', 'from $50'
+     */
+    price?: string | null;
+    description?: string | null;
+    id?: string | null;
+  }[]
+  | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -257,130 +431,110 @@ export interface Section {
    */
   slug?: string | null;
   children?:
-    | (
-        | {
-            label: string;
-            /**
-             * If set, pressing the button will open the selected dialog.
-             */
-            dialog?: (number | null) | Dialog;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'button';
-          }
-        | {
-            text?: string | null;
-            images?: (number | Media)[] | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'carousel';
-          }
-        | {
-            lines: {
-              text: string;
-              id?: string | null;
-            }[];
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'headline';
-          }
-        | {
-            color: string;
-            content: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'status-alert';
-          }
-        | {
-            variant?: ('p1' | 'p2' | 'p3') | null;
-            text?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'text';
-          }
-        | {
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contact-form';
-          }
-      )[]
-    | null;
+  | (
+    | {
+      label: string;
+      type: 'page' | 'custom' | 'dialog' | 'file';
+      page?: (number | null) | Page;
+      file?: (number | null) | Media;
+      url?: string | null;
+      /**
+       * If set, pressing the button will open the selected dialog.
+       */
+      dialog?: (number | null) | Dialog;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'button';
+    }
+    | {
+      text?: string | null;
+      images?: (number | Media)[] | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'carousel';
+    }
+    | {
+      lines: {
+        text: string;
+        id?: string | null;
+      }[];
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'headline';
+    }
+    | {
+      color: string;
+      content: string;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'status-alert';
+    }
+    | {
+      variant?: ('p1' | 'p2' | 'p3') | null;
+      text?: string | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'text';
+    }
+    | {
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'contact-form';
+    }
+    | {
+      title?: string | null;
+      items?:
+      | {
+        images: (number | Media)[];
+        title: string;
+        category: 'kilns' | 'controllers' | 'accessories' | 'other';
+        /**
+         * e.g. '$100', 'from $50'
+         */
+        price?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+      | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'gallery';
+    }
+    | {
+      triggerLabel: string;
+      slides?:
+      | {
+        image: number | Media;
+        description?: string | null;
+        id?: string | null;
+      }[]
+      | null;
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'realizations';
+    }
+  )[]
+  | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'section';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
+ * via the `definition` "realizations".
  */
-export interface Page {
-  id: number;
-  title: string;
-  slug: string;
-  keywords?: string | null;
-  description?: string | null;
-  content?:
-    | {
-        /**
-         * Allows to create a links to the section
-         */
-        slug?: string | null;
-        children?:
-          | (
-              | {
-                  label: string;
-                  /**
-                   * If set, pressing the button will open the selected dialog.
-                   */
-                  dialog?: (number | null) | Dialog;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'button';
-                }
-              | {
-                  text?: string | null;
-                  images?: (number | Media)[] | null;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'carousel';
-                }
-              | {
-                  lines: {
-                    text: string;
-                    id?: string | null;
-                  }[];
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'headline';
-                }
-              | {
-                  color: string;
-                  content: string;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'status-alert';
-                }
-              | {
-                  variant?: ('p1' | 'p2' | 'p3') | null;
-                  text?: string | null;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'text';
-                }
-              | {
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'contact-form';
-                }
-            )[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'section';
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
+export interface Realizations {
+  triggerLabel: string;
+  slides?:
+  | {
+    image: number | Media;
+    description?: string | null;
+    id?: string | null;
+  }[]
+  | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'realizations';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -398,12 +552,12 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
+  | {
+    id: string;
+    createdAt?: string | null;
+    expiresAt: string;
+  }[]
+  | null;
   password?: string | null;
 }
 /**
@@ -414,14 +568,14 @@ export interface PayloadKv {
   id: number;
   key: string;
   data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -430,22 +584,22 @@ export interface PayloadKv {
 export interface PayloadLockedDocument {
   id: number;
   document?:
-    | ({
-        relationTo: 'pages';
-        value: number | Page;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'dialogs';
-        value: number | Dialog;
-      } | null);
+  | ({
+    relationTo: 'pages';
+    value: number | Page;
+  } | null)
+  | ({
+    relationTo: 'media';
+    value: number | Media;
+  } | null)
+  | ({
+    relationTo: 'users';
+    value: number | User;
+  } | null)
+  | ({
+    relationTo: 'dialogs';
+    value: number | Dialog;
+  } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -466,14 +620,14 @@ export interface PayloadPreference {
   };
   key?: string | null;
   value?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -498,70 +652,119 @@ export interface PagesSelect<T extends boolean = true> {
   keywords?: T;
   description?: T;
   content?:
+  | T
+  | {
+    section?:
     | T
     | {
-        section?:
+      slug?: T;
+      children?:
+      | T
+      | {
+        button?:
+        | T
+        | {
+          label?: T;
+          type?: T;
+          page?: T;
+          file?: T;
+          url?: T;
+          dialog?: T;
+          id?: T;
+          blockName?: T;
+        };
+        carousel?:
+        | T
+        | {
+          text?: T;
+          images?: T;
+          id?: T;
+          blockName?: T;
+        };
+        headline?:
+        | T
+        | {
+          lines?:
           | T
           | {
-              slug?: T;
-              children?:
-                | T
-                | {
-                    button?:
-                      | T
-                      | {
-                          label?: T;
-                          dialog?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    carousel?:
-                      | T
-                      | {
-                          text?: T;
-                          images?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    headline?:
-                      | T
-                      | {
-                          lines?:
-                            | T
-                            | {
-                                text?: T;
-                                id?: T;
-                              };
-                          id?: T;
-                          blockName?: T;
-                        };
-                    'status-alert'?:
-                      | T
-                      | {
-                          color?: T;
-                          content?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    text?:
-                      | T
-                      | {
-                          variant?: T;
-                          text?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    'contact-form'?:
-                      | T
-                      | {
-                          id?: T;
-                          blockName?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
+            text?: T;
+            id?: T;
+          };
+          id?: T;
+          blockName?: T;
+        };
+        'status-alert'?:
+        | T
+        | {
+          color?: T;
+          content?: T;
+          id?: T;
+          blockName?: T;
+        };
+        text?:
+        | T
+        | {
+          variant?: T;
+          text?: T;
+          id?: T;
+          blockName?: T;
+        };
+        'contact-form'?:
+        | T
+        | {
+          id?: T;
+          blockName?: T;
+        };
+        gallery?:
+        | T
+        | {
+          title?: T;
+          items?:
+          | T
+          | {
+            images?: T;
+            title?: T;
+            category?: T;
+            price?: T;
+            description?: T;
+            id?: T;
+          };
+          id?: T;
+          blockName?: T;
+        };
+        realizations?:
+        | T
+        | {
+          triggerLabel?: T;
+          slides?:
+          | T
+          | {
+            image?: T;
+            description?: T;
+            id?: T;
+          };
+          id?: T;
+          blockName?: T;
+        };
       };
+      id?: T;
+      blockName?: T;
+    };
+    realizations?:
+    | T
+    | {
+      triggerLabel?: T;
+      slides?:
+      | T
+      | {
+        image?: T;
+        description?: T;
+        id?: T;
+      };
+      id?: T;
+      blockName?: T;
+    };
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -583,19 +786,39 @@ export interface MediaSelect<T extends boolean = true> {
   focalX?: T;
   focalY?: T;
   sizes?:
+  | T
+  | {
+    thumbnail?:
     | T
     | {
-        carouselImage?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    card?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+    large?:
+    | T
+    | {
+      url?: T;
+      width?: T;
+      height?: T;
+      mimeType?: T;
+      filesize?: T;
+      filename?: T;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -612,12 +835,12 @@ export interface UsersSelect<T extends boolean = true> {
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+  | T
+  | {
+    id?: T;
+    createdAt?: T;
+    expiresAt?: T;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -627,15 +850,15 @@ export interface DialogsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   content?:
+  | T
+  | {
+    'contact-form'?:
     | T
     | {
-        'contact-form'?:
-          | T
-          | {
-              id?: T;
-              blockName?: T;
-            };
-      };
+      id?: T;
+      blockName?: T;
+    };
+  };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -715,18 +938,90 @@ export interface Setting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads".
+ */
+export interface Download {
+  id: number;
+  categories?:
+  | {
+    title: string;
+    files?:
+    | {
+      name: string;
+      file: number | Media;
+      id?: string | null;
+    }[]
+    | null;
+    id?: string | null;
+  }[]
+  | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  whyUsLabel?: string | null;
+  missionLabel?: string | null;
+  worksLabel?: string | null;
+  servicesLabel?: string | null;
+  contactLabel?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
   email?:
+  | T
+  | {
+    host?: T;
+    port?: T;
+    username?: T;
+    password?: T;
+    sender?: T;
+  };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads_select".
+ */
+export interface DownloadsSelect<T extends boolean = true> {
+  categories?:
+  | T
+  | {
+    title?: T;
+    files?:
     | T
     | {
-        host?: T;
-        port?: T;
-        username?: T;
-        password?: T;
-        sender?: T;
-      };
+      name?: T;
+      file?: T;
+      id?: T;
+    };
+    id?: T;
+  };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  whyUsLabel?: T;
+  missionLabel?: T;
+  worksLabel?: T;
+  servicesLabel?: T;
+  contactLabel?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -741,5 +1036,5 @@ export interface Auth {
 
 
 declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
+  export interface GeneratedTypes extends Config { }
 }

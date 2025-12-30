@@ -1,11 +1,10 @@
 "use client";
 
 import { createContext, use } from "react";
-
-import { EnterAnimationBlurText } from "@/components/animation/enter-animation";
-import { RichText } from "@/components/rich-text";
+import { EnterAnimationBlur } from "@/components/animation/enter-animation";
 import { Text as BaseText } from "@/components/text";
 import type { Text as TextProps } from "@/payload-types";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export interface TextState {
   className?: string;
@@ -20,20 +19,26 @@ export function TextProvider({
   return <TextContext.Provider value={value}>{children}</TextContext.Provider>;
 }
 
-export function Text({ text, richTextContent, variant }: TextProps & { richTextContent?: any }) {
+export function Text({ text, variant }: TextProps) {
   const context = use(TextContext);
 
-  if (richTextContent) {
-    return (
-      <div className={context?.className}>
-        <RichText content={richTextContent} />
-      </div>
-    );
-  }
-
   return (
-    <BaseText variant={variant} className={context?.className}>
-      <EnterAnimationBlurText>{text ?? ""}</EnterAnimationBlurText>
+    <BaseText variant={variant} className={context?.className} asChild>
+      <div>
+        <EnterAnimationBlur>
+          <div className="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
+            {text ? (
+              typeof text === 'string' ? (
+                <p>{text}</p>
+              ) : (
+                <RichText data={text as any} />
+              )
+            ) : (
+              ""
+            )}
+          </div>
+        </EnterAnimationBlur>
+      </div>
     </BaseText>
   );
 }

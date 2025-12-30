@@ -3,12 +3,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   turbopack: {
     rules: {
       "*.svg": {
@@ -16,9 +10,6 @@ const nextConfig: NextConfig = {
         as: "*.js",
       },
     },
-  },
-  experimental: {
-    allowedDevOrigins: ["www.dggpiece.pl", "dggpiece.pl", "localhost:3001", "localhost:3005"],
   },
   images: {
     remotePatterns: [
